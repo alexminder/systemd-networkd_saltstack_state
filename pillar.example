@@ -24,6 +24,9 @@
       v111-bt1t:
         prefix: 27
         gateway: 10.10.198.97
+        static_routes:
+        - destination: '192.168.0.0/16'
+          gw: '10.10.198.98'
       v325-pub-mJbT:
         prefix: 24
       v84-3qaf:
