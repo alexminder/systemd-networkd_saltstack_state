@@ -1,1 +1,2 @@
-# systemd-networkd_saltstack_state
+# SaltStack states to configure network managed by systemd-networkd
+
