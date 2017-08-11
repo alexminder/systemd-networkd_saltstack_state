@@ -1,0 +1,13 @@
+{% set confmap = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': 'systemd',
+        'NMpkg': 'network-manager',
+        'legacynetsvc': 'networking',
+    },
+    'Redhat': {
+        'pkgs': 'systemd-networkd',
+        'NMpkg': 'NetworkManager',
+        'legacynetsvc': 'network',
+    },
+}, grain='os_family', default='Redhat') %}
+

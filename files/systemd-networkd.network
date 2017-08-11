@@ -1,0 +1,40 @@
+[Match]
+Name = {{ iface.name }}
+
+[Network]
+{%- if salt['grains.get']('systemd:version', '0') > '220' %}
+IPForward = kernel
+{%- endif %}
+{%- if iface.proto != 'dhcp' %}
+DHCP = no
+ {%- if iface.ipaddr is defined %}
+  {%- for ip in iface.ipaddr.split(',') %}
+Address = {{ ip }}/{{ subnet.prefix }}
+  {%- endfor %}
+  {%- if subnet is defined and iface.is_primary is defined %}
+   {%- if iface.is_primary == True %}
+Gateway = {{ subnet.gateway }}
+   {%- endif %}
+  {%- endif %}
+ {%- endif %}
+{%- else %}
+DHCP = yes
+{%- endif %}
+{%- if iface.vlan_childs is defined %}
+ {%- for ifvlan in iface.vlan_childs %}
+VLAN = {{ ifvlan }}
+ {%- endfor %}
+{%- endif %}
+{%- if iface.bond_master is defined %}
+Bond = {{ iface.bond_master }}
+{%- endif %}
+{%- if subnet is defined %}
+ {%- if subnet.static_routes is defined %}
+  {%- for route in subnet.static_routes %}
+
+[Route]
+Gateway = {{ route.gw }}
+Destination = {{ route.destination }}
+  {%- endfor %}
+ {%- endif %}
+{%- endif %}
