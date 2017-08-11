@@ -1,0 +1,117 @@
+  network:
+    is_managed: true
+    subnets:
+      v3929-internal-hymw:
+        prefix: 24
+      v2335-mesh-g3Bt:
+        prefix: 24
+      v13-mgmt-security:
+        prefix: 24
+        gateway: 10.10.208.254
+      v2322-mgmt-UWkQ:
+        prefix: 24
+        gateway: 10.10.32.254
+      v190-nfs-fmVc:
+        prefix: 27
+      v2323-ex3-zMZM:
+        prefix: 24
+      v81-backup-L486:
+        prefix: 26
+      v3926-vmotion-vWDd:
+        prefix: 24
+      v326-storage-95fH:
+        prefix: 24
+      v111-bt1t:
+        prefix: 27
+        gateway: 10.10.198.97
+      v325-pub-mJbT:
+        prefix: 24
+      v84-3qaf:
+        prefix: 27
+        gateway: 10.10.198.30
+      v1114-ex2-utxV:
+        prefix: 23
+      v98-pxe-g4mz:
+        prefix: 26
+      v1084-ex-3gek:
+        prefix: 23
+      v161-Dl4s:
+        prefix: 24
+        gateway: 192.168.7.1
+    interfaces:
+    - bond_master: bond0
+      type: eth
+      name: enp22s0f4
+      proto: static
+    - bond_master: bond0
+      type: eth
+      name: enp22s0f5
+      proto: static
+    - miimon: 100
+      name: bond0
+      proto: static
+      vlan_childs:
+      - vlan2322
+      mtu: 1500
+      mode: active-backup
+      type: bond
+    - name: vlan2322
+      proto: static
+      subnet_id: v2322-mgmt-UWkQ
+      is_primary: true
+      ipaddr: 10.10.32.23
+      tag: 2322
+      type: vlan
+    - bond_master: bond1
+      type: eth
+      name: eno1
+      proto: static
+    - bond_master: bond1
+      type: eth
+      name: enp22s0f1
+      proto: static
+    - lacp_rate: slow
+      miimon: 1000
+      name: bond1
+      xmit_hash_policy: layer3+4
+      proto: static
+      vlan_childs:
+      - vlan2323
+      - vlan2335
+      - vlan1084
+      - vlan1114
+      - vlan3926
+      - vlan3929
+      mtu: 9000
+      mode: 802.3ad
+      type: bond
+    - name: vlan2335
+      proto: static
+      subnet_id: v2335-mesh-g3Bt
+      ipaddr: 10.10.45.23
+      tag: 2335
+      type: vlan
+    - tag: 2323
+      type: vlan
+      name: vlan2323
+      proto: static
+    - tag: 1084
+      type: vlan
+      name: vlan1084
+      proto: static
+    - tag: 1114
+      type: vlan
+      name: vlan1114
+      proto: static
+    - name: vlan3926
+      proto: static
+      subnet_id: v3926-vmotion-vWDd
+      ipaddr: 10.10.220.35
+      tag: 3926
+      type: vlan
+    - name: vlan3929
+      proto: static
+      subnet_id: v3929-internal-hymw
+      ipaddr: 10.10.222.23
+      tag: 3929
+      type: vlan
