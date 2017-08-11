@@ -2,4 +2,4 @@
 
 Install and configure systemd-networkd.
 
-See pillar.example for netfork interface configuration definition.
+See pillar.example for network interface configuration definition.
