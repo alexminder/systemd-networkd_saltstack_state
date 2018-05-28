@@ -17,6 +17,11 @@ Gateway = {{ subnet.gateway }}
    {%- endif %}
   {%- endif %}
  {%- endif %}
+ {%- if iface.dns is defined %}
+  {%- for dns in iface.dns.split(',') %}
+DNS = {{ dns }}
+  {%- endfor %}
+ {%- endif %}
 {%- else %}
 DHCP = yes
 {%- endif %}
