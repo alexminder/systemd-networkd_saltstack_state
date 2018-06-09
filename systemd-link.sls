@@ -38,10 +38,14 @@ ensure {{ filename }} exists with ini sections:
           MACAddress: "{{ grains['hwaddr_interfaces:'+ifudev.E.INTERFACE] }}"
       {%- endif %}
         Link:
-      {%- if salt['cmd.run_stdout']("ethtool "+iface.name+"|awk '/Speed:/{print $2}'|grep -oP '\d+'", python_shell=True)|int > 5000 and grains['virtual'] == "physical" %}
-          MTUBytes: "9000"
+      {%- if iface.mtu is defined %}
+          MTUBytes: "{{ iface.mtu }}"
       {%- else %}
+        {%- if salt['cmd.run_stdout']("ethtool "+iface.name+"|awk '/Speed:/{print $2}'|grep -oP '\d+'", python_shell=True)|int > 5000 and grains['virtual'] == "physical" %}
+          MTUBytes: "9000"
+        {%- else %}
           MTUBytes: "1500"
+        {%- endif %}
       {%- endif %}
           Name: "{{ ifudev.E.INTERFACE }}"
     - watch_in:
